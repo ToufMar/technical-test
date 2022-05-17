@@ -5,9 +5,10 @@ import { Product } from "../entities/Product";
 import { createProductIfNotExists } from "../repositories/productRepository";
 
 const rootDir = path.join(__dirname, "../../src");
+
 const dataSource = new DataSource({
     type: "postgres",
-    url: "postgres://postgres:marty@localhost:5432/postgres",
+    url: "",
     synchronize: true,
     logging: false,
     entities: [rootDir + "/entities/**/*.ts"],

@@ -17,8 +17,12 @@ export const updateProduct = async ({ where, set }: { where: FindOneOptions<Prod
     return await repository.save({ ...product, ...set });
 };
 
-export const getManyProducts = async (productUuids: string[]) => {
+export const getManyProducts = async (productUuids: string[] | undefined) => {
+    console.log(productUuids);
     const repository = dataSource.getRepository(Product);
+    if (!productUuids) {
+        return repository.find();
+    }
     return await repository.find({ where: { uuid: In(productUuids) } });
 };
 

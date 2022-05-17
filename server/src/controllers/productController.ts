@@ -26,14 +26,16 @@ export const createProductController = async (req: TypedRequestBody<CreateProduc
         const product = await createProductIfNotExists({ ...req.body });
         return res.status(200).send(product);
     } catch (e) {
+        console.log(e);
         next(e);
     }
 };
 
 export const getManyProductController = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
+        console.log(req.query);
         const products = await getManyProducts(req.query.productUuids as string[]);
-        res.status(200).send(products);
+        res.status(200).send({ message: products });
     } catch (e) {
         next(e);
     }
