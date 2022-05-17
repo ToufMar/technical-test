@@ -55,7 +55,7 @@ export const updateProductController = async (req: TypedRequestBody<UpdateProduc
     }
 };
 
-export const deleteProductController = async (req: TypedRequestBody<DeleteProductInput>, res: express.Response, next: NextFunction) => {
+export const deleteManyProductController = async (req: TypedRequestBody<DeleteProductInput>, res: express.Response, next: NextFunction) => {
     try {
         await deleteManyProducts(req.body.productUuids);
         return res.status(204);
