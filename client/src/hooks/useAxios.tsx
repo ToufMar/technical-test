@@ -1,9 +1,16 @@
 import axios, { AxiosError } from "axios";
 import React, { useCallback, useState } from "react";
+import env from "../dist/envConfig";
+
+type Product = {
+    uuid: string;
+    price: string;
+    name: string;
+};
 
 type Response = {
     statusCode: number;
-    message: any;
+    message: Product[];
 };
 
 type Error = {
@@ -49,7 +56,7 @@ export const useAxios = (): [RequestState, Record<string, Function>] => {
             });
             const {
                 data: { message, statusCode },
-            } = await axios.get<Response>(url);
+            } = await axios.get<Response>(env.API_URL + url);
             setRequestState({
                 loading: false,
                 error: null,
@@ -69,7 +76,7 @@ export const useAxios = (): [RequestState, Record<string, Function>] => {
             });
             const {
                 data: { message, statusCode },
-            } = await axios.post<Response>(url);
+            } = await axios.post<Response>(env.API_URL + url);
             setRequestState({
                 loading: false,
                 error: null,
