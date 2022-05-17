@@ -4,11 +4,13 @@ import router from "./routes/routes";
 import cors from "cors";
 import { errorHandler } from "./toolServices/responseService";
 import "reflect-metadata";
-import dataSource from "./config/typeormConfig";
+import dataSource, { seedDatabase } from "./config/typeormConfig";
 
 const NODE_PORT = process.env.NODE_PORT as string;
 
-const main = () => {
+const main = async () => {
+    await seedDatabase();
+
     const app = express();
 
     app.use(cors());
@@ -16,6 +18,7 @@ const main = () => {
     app.use(router);
 
     app.use(errorHandler);
+
     app.listen(NODE_PORT, () => console.log(`server is listening on port ${NODE_PORT}`));
 };
 
