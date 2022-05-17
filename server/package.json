@@ -6,14 +6,18 @@
   "author": "Marty <rotureau.martin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "sync-database": "ts-node node_modules/typeorm/cli.js schema:sync -d src/config/typeormConfig.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "nodemon": "^2.0.16",
+    "pg": "^8.7.3",
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^10.7.0",
+    "typeorm": "^0.3.6",
     "typescript": "^4.6.4"
   },
   "devDependencies": {
