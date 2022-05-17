@@ -26,7 +26,6 @@ export const internalServerError = () => {
 };
 
 export const errorHandler = (err: Error | any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.log(err);
     if (err instanceof Error) {
         return res.status(err.code).send({ statusCode: err.code, ...err.body });
     }

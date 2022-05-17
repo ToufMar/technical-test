@@ -18,7 +18,6 @@ export const updateProduct = async ({ where, set }: { where: FindOneOptions<Prod
 };
 
 export const getManyProducts = async (productUuids: string[] | undefined) => {
-    console.log(productUuids);
     const repository = dataSource.getRepository(Product);
     if (!productUuids) {
         return repository.find();

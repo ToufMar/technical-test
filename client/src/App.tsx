@@ -9,16 +9,6 @@ import { Product } from "./components/product";
 import { Create } from "./components/create";
 
 function App() {
-    const [data, methods] = useAxios();
-
-    useEffect(() => {
-        methods.getData(env.API_URL + "/");
-    }, []);
-
-    if (data) {
-        console.log(data);
-    }
-
     return (
         <div className="App">
             <h1>Test Technique</h1>
