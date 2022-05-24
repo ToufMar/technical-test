@@ -11,6 +11,14 @@ export const createProductIfNotExists = async (params: DeepPartial<Product>): Pr
     return null;
 };
 
+export const createProduct = async (params: DeepPartial<Product>): Promise<Product | null> => {
+    const repository = dataSource.getRepository(Product);
+    const product = new Product();
+    product.name = params.name as string;
+    product.price = params.price as number;
+    return await repository.save(product);
+};
+
 export const updateProduct = async ({ where, set }: { where: FindOneOptions<Product>; set: Product }): Promise<Product> => {
     const repository = dataSource.getRepository(Product);
     const product = await repository.findOneOrFail(where);

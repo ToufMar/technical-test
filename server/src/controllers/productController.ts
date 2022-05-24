@@ -1,6 +1,6 @@
 import express, { NextFunction } from "express";
 import { Product } from "../entities/Product";
-import { createProductIfNotExists, deleteManyProducts, getManyProducts, updateProduct } from "../repositories/productRepository";
+import { createProduct, createProductIfNotExists, deleteManyProducts, getManyProducts, updateProduct } from "../repositories/productRepository";
 
 interface TypedRequestBody<T> extends express.Request {
     body: T;
@@ -23,9 +23,10 @@ type DeleteProductInput = {
 
 export const createProductController = async (req: TypedRequestBody<CreateProductInput>, res: express.Response, next: NextFunction) => {
     try {
-        const product = await createProductIfNotExists({ ...req.body });
+        const product = await createProduct(req.body);
         return res.status(200).send(product);
     } catch (e) {
+        console.log(e);
         next(e);
     }
 };

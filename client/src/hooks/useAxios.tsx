@@ -67,7 +67,7 @@ export const useAxios = (): [RequestState, Record<string, Function>] => {
         }
     }, []);
 
-    const postData = useCallback(async (url: string) => {
+    const postData = useCallback(async (url: string, body: any) => {
         try {
             setRequestState({
                 loading: true,
@@ -76,16 +76,18 @@ export const useAxios = (): [RequestState, Record<string, Function>] => {
             });
             const {
                 data: { message, statusCode },
-            } = await axios.post<Response>(env.API_URL + url);
+            } = await axios.post<Response>(env.API_URL + url, { ...body });
+            console.log(message);
             setRequestState({
                 loading: false,
                 error: null,
                 data: { message, statusCode },
             });
         } catch (e) {
+            console.log(e);
             _handleError(e);
         }
     }, []);
 
-    return [requestState, { getData }];
+    return [requestState, { getData, postData }];
 };
