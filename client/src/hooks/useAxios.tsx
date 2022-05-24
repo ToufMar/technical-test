@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router-dom";
 import env from "../dist/envConfig";
 
 type Product = {
@@ -30,7 +31,7 @@ export const useAxios = (): [RequestState, Record<string, Function>] => {
         error: null,
         data: null,
     });
-
+    const { push } = useHistory();
     const _handleError = (e: unknown | AxiosError) => {
         if (e instanceof AxiosError && e.response) {
             setRequestState({
@@ -62,6 +63,7 @@ export const useAxios = (): [RequestState, Record<string, Function>] => {
                 error: null,
                 data: { message, statusCode },
             });
+            return message;
         } catch (e) {
             _handleError(e);
         }
@@ -77,17 +79,31 @@ export const useAxios = (): [RequestState, Record<string, Function>] => {
             const {
                 data: { message, statusCode },
             } = await axios.post<Response>(env.API_URL + url, { ...body });
-            console.log(message);
             setRequestState({
                 loading: false,
                 error: null,
                 data: { message, statusCode },
             });
         } catch (e) {
-            console.log(e);
             _handleError(e);
         }
     }, []);
 
-    return [requestState, { getData, postData }];
+    const deleteData = useCallback(async (url: string) => {
+        try {
+            setRequestState({
+                loading: true,
+                error: null,
+                data: null,
+            });
+            return await axios({
+                method: "DELETE",
+                url: env.API_URL + url,
+            });
+        } catch (e) {
+            _handleError(e);
+        }
+    }, []);
+
+    return [requestState, { getData, postData, deleteData }];
 };

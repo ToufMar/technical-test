@@ -17,16 +17,11 @@ type UpdateProductInput = {
     price: number;
 };
 
-type DeleteProductInput = {
-    productUuids: string[];
-};
-
 export const createProductController = async (req: TypedRequestBody<CreateProductInput>, res: express.Response, next: NextFunction) => {
     try {
         const product = await createProduct(req.body);
-        return res.status(200).send(product);
+        return res.status(200).send({ message: product });
     } catch (e) {
-        console.log(e);
         next(e);
     }
 };
@@ -56,9 +51,9 @@ export const updateProductController = async (req: TypedRequestBody<UpdateProduc
     }
 };
 
-export const deleteManyProductController = async (req: TypedRequestBody<DeleteProductInput>, res: express.Response, next: NextFunction) => {
+export const deleteManyProductController = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
-        await deleteManyProducts(req.body.productUuids);
+        await deleteManyProducts([req.params.productUuids]);
         return res.status(204);
     } catch (e) {
         next(e);

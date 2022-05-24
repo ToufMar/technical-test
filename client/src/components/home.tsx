@@ -32,8 +32,9 @@ export const Home: React.FC = () => {
                         <button className="btn btn-primary">Create product</button>
                     </div>
                     <div className="d-flex flex-wrap justify-content-center">
-                        {state.data.message.map((d) => (
+                        {state.data.message.map((d, index) => (
                             <div
+                                key={index}
                                 onClick={() => push(`/${d.uuid}`)}
                                 style={{ minHeight: "100px", minWidth: "200px", cursor: "pointer" }}
                                 className="card mx-3 my-3"

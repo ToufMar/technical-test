@@ -1,18 +1,18 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useAxios } from "../hooks/useAxios";
 
 export const Create: React.FC = () => {
     const [, { postData }] = useAxios();
     const [formInput, setFormInput] = useState({});
+    const { push } = useHistory();
 
     const onChange = (e: any) => {
         setFormInput({ ...formInput, [e.target.name]: e.target.value });
     };
     const onSubmit = (e: any) => {
         e.preventDefault();
-        postData("/", { ...formInput })
-            .then((e: any) => console.log("ici =>", e))
-            .catch((e: any) => console.log("la => ", e));
+        postData("/", { ...formInput }).then(() => push("/"));
     };
 
     return (
